@@ -4,6 +4,12 @@ CloudPulse is a modern, responsive web application that provides real-time weath
 
 ---
 
+## Live Demo
+
+- **Live Here:** [CloudPulse](https://cloudpulse-weather.netlify.app/)
+
+---
+
 ## 🏗️ Architecture & How It Works
 
 CloudPulse follows a clean, single-direction data flow:
