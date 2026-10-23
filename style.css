@@ -1,223 +1,359 @@
-body {
+/* ==========================================================
+   CloudPulse - Weather Dashboard Modern Stylesheet
+   ========================================================== */
 
-  background-image: url('sun-shining-dark-clouds-green-field.jpg');
-  background-size: cover;
-  background-position: center 85%; /* Moves the focal point 85% from the top (15% from bottom) */
-  background-attachment: fixed; /* Optional: Keeps background fixed on scroll */
-  background-repeat: no-repeat;
-  margin: 0;
-  min-height: 100vh;
-
-    font-family: "Comfortaa", sans-serif;
-    color: white;
+* {
+    box-sizing: border-box;
 }
 
+body {
+    background: linear-gradient(rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.55)),
+                url('sun-shining-dark-clouds-green-field.jpg') center 85% / cover no-repeat fixed;
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Comfortaa", sans-serif;
+    color: #ffffff;
+    overflow-x: hidden;
+}
 
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.45);
+}
+
+/* ==========================================================
+   1. Search Bar Header
+   ========================================================== */
 .searchBar {
-    height: 10vh;
-    /* background: black; */
+    min-height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.inputfield {
-    outline: none;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
-    color: rgba(0, 0, 0, 0.748);
-    font-size: large;
-    font-weight: 800;
-}
-.inputfield::placeholder{
-    color: rgba(0, 0, 0, 0.749);
+    padding: 15px 20px;
 }
 
 .searchBarParentDiv {
     width: 50%;
-    height: fit-content;
+    max-width: 580px;
     position: relative;
-
+    border: 2px solid transparent;
+    border-radius: 30px;
+    transition: all 0.25s ease;
 }
-.searchBarParentDiv:hover{
-    cursor: text;
-    border: 2px solid #4a90e2;
-    border-radius: 25px;
-    transform: scale(1.01);
-    transition: all 0.2s ease;
+
+.searchBarParentDiv:focus-within,
+.searchBarParentDiv:hover {
+    border-color: rgba(255, 255, 255, 0.7);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 .inputfield {
     width: 100%;
-    border-radius: 25px;
-    padding: 10px;
+    border-radius: 30px;
+    padding: 12px 55px 12px 22px;
     outline: none;
-    border: 0px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 600;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.inputfield::placeholder {
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 400;
 }
 
 .searchIcon {
     position: absolute;
-    right: 10px;
-    top: 5px;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    opacity: 0.9;
 }
 
 .searchIcon:hover {
-    cursor: pointer;
+    transform: translateY(-50%) scale(1.12);
+    opacity: 1;
 }
 
-
+/* ==========================================================
+   2. Main Layout Structure
+   ========================================================== */
 .mainContentParentDiv {
-    height: 90vh;
+    display: flex;
     flex-direction: row;
+    gap: 20px;
+    padding: 0 30px 30px 30px;
+    min-height: calc(100vh - 90px);
 }
 
 .leftDiv {
-    width: 30%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.leftChild {
-    background: rgba(212, 212, 212, 0.4);
-    width: 85%;
-    height: 40vh;
-    margin: auto;
-    border-radius: 15px;
-    backdrop-filter: blur(15px);
-}
-
-.currentTempDiv h6 {
-    font-size: larger;
-}
-
-#cityName {
-    font-size: xx-large;
-}
-
-#cityTemp {
-    font-size: x-large;
-}
-
-
-.rightDiv {
-    width: 70%;
-    height: 100%;
+    width: 32%;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding-right: 45px;
+}
+
+.rightDiv {
+    width: 68%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Glassmorphism Card Base */
+.leftChild,
+.rowTwoDiv,
+.rowThree,
+.extraMetric {
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.leftChild:hover,
+.rowTwoDiv:hover,
+.extraMetric:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22);
+}
+
+/* ==========================================================
+   3. Left Section: Current Weather & 5-Day Forecast
+   ========================================================== */
+.currentTempDiv {
+    min-height: 250px;
+}
+
+#cityName {
+    font-size: 1.5rem;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.display-temp {
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+#cityDesc {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.line {
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    opacity: 1;
+}
+
+.nextFiveDays {
+    min-height: 310px;
+    max-height: 420px;
+    overflow-y: auto;
 }
 
 #comingFiveDaysTitle {
-    font-size: x-large;
+    font-size: 1.25rem;
 }
 
-.rightRow {
-    height: 27vh;
+.forecastRow {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 10px 14px;
+    border-radius: 12px;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.forecastRow:hover {
+    background: rgba(255, 255, 255, 0.22);
+    transform: translateX(3px);
+}
+
+.day-label {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.text-muted-white {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.85rem;
+}
+
+/* ==========================================================
+   4. Right Section: Row 1 - Weather Metrics
+   ========================================================== */
+.rowOne {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
     width: 100%;
 }
 
 .extraMetric {
-    background: rgba(212, 212, 212, 0.4);
-    padding: 5% 2%;
-    width: fit-content;
-    border-radius: 15px;
+    padding: 18px 16px;
+    display: flex;
     align-items: center;
-    backdrop-filter: blur(15px);
+    gap: 14px;
+}
+
+.metric-title {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.metric-val {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* ==========================================================
+   5. Right Section: Row 2 - AQI & Sunrise/Sunset
+   ========================================================== */
+.rowTwo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
 }
 
 .rowTwoDiv {
-    background: rgba(212, 212, 212, 0.4);
-    backdrop-filter: blur(15px);
-    width: 45%;
-    height: 85%;
-    border-radius: 15px;
+    min-height: 150px;
+    padding: 20px;
+}
+
+.aqiBadge {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background-color: #28a745;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.sunriseDiv,
+.sunsetDiv {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 10px 16px;
+    border-radius: 14px;
+    flex: 1;
+}
+
+/* ==========================================================
+   6. Right Section: Row 3 - Upcoming Hourly Forecast
+   ========================================================== */
+.rowThree {
+    padding: 20px;
+}
+
+.todayTempParentDiv {
+    gap: 12px;
+    overflow-x: auto;
+    padding: 8px 0 4px 0;
 }
 
 .todayTemp {
-    background: rgba(212, 212, 212, 0.4);
-    width: fit-content;
-    padding: 15px;
-    border-radius: 15px;
-    backdrop-filter: blur(15px);
+    flex: 1;
+    min-width: 105px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 14px 10px;
+    border-radius: 14px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
+    transition: all 0.25s ease;
 }
 
+.todayTemp:hover {
+    background: rgba(255, 255, 255, 0.22);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
 
+.todayTemp h6 {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.85);
+}
 
-@media only screen and (max-width: 767px) {
-  .mainContentParentDiv {
-    flex-direction: column;
-    height: auto; /* Allow content to expand naturally */
-  }
+.todayTemp h5 {
+    font-size: 1.1rem;
+    margin: 0;
+}
 
-  .leftDiv {
-    width: 100%;
-    height: auto;
-    margin-top: 15px;
-    gap: 25px;
-  }
+/* ==========================================================
+   7. Responsive Design
+   ========================================================== */
+@media only screen and (max-width: 1080px) {
+    .rowOne {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
-  .rightDiv {
-    width: 100%;
-    height: auto;
-    padding-right: 0;
-    gap: 25px;
-  }
+@media only screen and (max-width: 900px) {
+    .mainContentParentDiv {
+        flex-direction: column;
+        padding: 0 15px 25px 15px;
+    }
 
-  .searchBar {
-    width: 100%;
-  }
+    .leftDiv,
+    .rightDiv {
+        width: 100%;
+        padding: 0;
+    }
 
-  .searchBarParentDiv {
-    width: 85%;
-    margin: auto;
-  }
+    .searchBarParentDiv {
+        width: 80%;
+    }
 
-  .rowOne {
-    flex-wrap: wrap;
-    width: 100%;
-    margin: auto;
-    height: auto; /* Let rows expand naturally */
-  }
+    .rowTwo {
+        grid-template-columns: 1fr;
+    }
+}
 
-  .rowTwo {
-    flex-direction: column;
-    gap: 10px;
-    height: auto; /* Let rows expand naturally */
-  }
+@media only screen and (max-width: 576px) {
+    .searchBar {
+        padding: 10px;
+    }
 
-  .rowTwoDiv {
-    width: 100%;
-    height: auto;
-    padding: 10px;
-    border-radius: 15px;
-  }
+    .searchBarParentDiv {
+        width: 95%;
+    }
 
-  .rowThree {
-    width: 100%;
-    margin: auto;
-  }
+    .rowOne {
+        grid-template-columns: 1fr;
+    }
 
-  .todayTempParentDiv {
-    width: 100%;
-    flex-wrap: wrap;
-    margin: auto;
-    gap: 15px;
-  }
-
-  .extraMetric {
-    width: 100%;
-    padding: 15px;
-    border-radius: 15px;
-    align-items: center;
-  }
+    .todayTemp {
+        min-width: 90px;
+    }
 }
